@@ -1,5 +1,7 @@
 # sannmizusite
 
+主页链接：https://www.sannmizu.com
+
 ## Project setup
 ```
 npm install
