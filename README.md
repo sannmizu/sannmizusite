@@ -1,6 +1,7 @@
 # sannmizusite
 
 主页链接：https://www.sannmizu.com
+还没做优化，打开网页需要下载几M资源
 
 ## Project setup
 ```
