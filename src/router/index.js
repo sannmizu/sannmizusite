@@ -33,6 +33,14 @@ const routes = [
     component: () => import( /* webpackChunkName: 'blogDetail' */ '../views/BlogDetail')
   },
   {
+    path: '/project',
+    name: 'Project',
+    meta: {
+      page: 'project'
+    },
+    component: () => import( /* webpackChunkName: 'project' */ '../views/Project')
+  },
+  {
     path: '/:pathMatch(.*)*',
     redirect: { name: 'NotFound' }
   },

@@ -1,14 +1,27 @@
 <template>
   <a-layout-content class="main-wrapper">
-    <div id="the-body">
-        <router-view></router-view>
+    <div id="the-body" ref="body" :style="{ minHeight: minHeight + 'px' }">
+      <router-view></router-view>
     </div>
   </a-layout-content>
 </template>
 
 <script>
 export default {
-  name: "MainWrapper"
+  name: "MainWrapper",
+  data() {
+    return {
+      minHeight: 0
+    }
+  },
+  mounted() {
+    let clientHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+    this.minHeight = clientHeight - 153
+    window.onresize = () => {
+      clientHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+      this.minHeight = clientHeight - 153
+    }
+  }
 }
 </script>
 
