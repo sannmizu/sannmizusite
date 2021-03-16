@@ -5,7 +5,7 @@
       <header-wrapper></header-wrapper>
       <main-wrapper></main-wrapper>
       <a-layout-footer class="app-footer">
-        备案号：<a href="http://beian.miit.gov.cn/" target="_blank">湘ICP备 2020020630号</a>
+        备案号：<a href="http://beian.miit.gov.cn/" target="_blank">湘ICP备2020020630号-1</a>
       </a-layout-footer>
     </a-layout>
   </div>
