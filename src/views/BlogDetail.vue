@@ -1,8 +1,8 @@
 <template>
   <div class="blog-detail">
-    <blog-header :title="blog.blogTitle" :date="blog.blogDate" original />
+    <blog-header :title="blog.title" :date="blog.publishDate" original />
     <div class="blog-context-container">
-      <v-md-editor mode="preview" v-model="blog.blogContent" id="show-view" ref="editor" v-on:load="getTitles" />
+      <v-md-editor mode="preview" v-model="blog.content" id="show-view" ref="editor" v-on:load="getTitles" />
       <a-anchor :offsetTop="100" class="blog-title-anchor">
         <a-anchor-link v-for="h2 in titles" :key="h2.lineIndex" :title="h2.parent.title" :href="'#' + h2.parent.id">
           <a-anchor-link v-for="h3 in h2.children" :key="h3.lineIndex" :title="h3.title" :href="'#' + h3.id"></a-anchor-link>
@@ -21,6 +21,7 @@ export default {
   components: {PAnchorLink, BlogHeader},
   data() {
     return {
+      blogId: 0,
       blog: {
       },
       titles: {
@@ -31,16 +32,21 @@ export default {
   inject: ['antAnchor'],
   methods: {
     getBlog(route) {
-      console.log(route.params.blogId)
-      try {
-        this.blog = require('@/assets/mock/blogs/' + route.params.blogId)
-      } catch (e) {
-        console.log(e)
-        this.$router.push('/404')
-      }
+      this.blogId = route.params.blogId
+      // TODO:以后封装路径参数
+      let url = process.env.VUE_APP_API_BLOG_DETAIL.replace(/{blogId}/, this.blogId)
+      this.axios.get(url)
+      .then((response) => {
+        let result = response.data
+        if (result || result.code === 200) {
+          let data = result.data
+          this.blog = data
+          console.log(data)
+        }
+      })
     },
     getTitles() {
-      if (this.id === this.blog.blogId) {
+      if (this.id === this.blog.bid) {
         return
       }
 
@@ -52,7 +58,7 @@ export default {
       console.log(titleEls)
       if (!titleEls.length) {
         this.titles = []
-        this.id = this.blog.blogId
+        this.id = this.blog.bid
         return
       }
 
@@ -99,7 +105,7 @@ export default {
       console.log('load titles')
 
       this.titles = titles
-      this.id = this.blog.blogId
+      this.id = this.blog.bid
     }
   },
   created() {
